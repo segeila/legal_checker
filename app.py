@@ -7,6 +7,13 @@ st.sidebar.file_uploader('', type=['pdf', 'docx'])
 #Main Section
 st.title('NDA Comparisor')
 
+sample_nda_text = """ This Non-Disclosure Agreement (the “Agreement”) is entered into by and between [Company Name],
+a [State] corporation, having a principal place of business at [Address] (“Company”), and [Name],
+having a principal place of residence at [Address] (“Recipient”). With respect to the disclosure of certain proprietary and confidential information
+that is described below, the parties agree to the following terms and conditions:
+- Definition of Confidential Information. “Confidential Information” means any information disclosed by or on behalf of Company to Recipient,
+whether before or after the date of this Agreement, that is not generally known to the public and that Recipient should know given the facts and circumstances."""
+
 slide_number = st.slider('Scroll through paragraphs', 1, 3, 1)
 
 if slide_number == 1:
@@ -16,7 +23,10 @@ if slide_number == 1:
 
     with col1:
         st.subheader('Template NDA')
-        st.write('Template NDA text which is very long and has a lot of text in it. It is so long that it is going to be cut off in the middle of a sentence.')
+        st.markdown(f'<div style="height:200px; overflow-y: auto;">{sample_nda_text}</div>',
+                    unsafe_allow_html=True,)
+        st.write("")
+        st.write("")
     with col2:
         st.subheader('New NDA')
         st.write('Your NDA text which differs from the template NDA text. It is so long that it is going to be cut off in the middle of a sentence.')
