@@ -1,16 +1,28 @@
 import streamlit as st
 import pandas as pd
+from docx import Document
+from docx.enum.text import WD_COLOR
+from docx.shared import RGBColor
+
+def save_docx(paragraphs, highlights):
+    # Create a Word document
+    doc = Document()
+
+    for i in range(len(paragraphs)):
+        if (highlights[i] != None):
+            # Add a highlighted paragraph
+            p = doc.add_paragraph()
+            p.add_run(paragraphs[i]).font.highlight_color = highlights[i]
+        else:
+            # Add a regular paragraph
+            p = doc.add_paragraph()
+            p.add_run(paragraphs[i])
+
+    # Save to a temporary file
+    temp_file = "temp.docx"
+    doc.save(temp_file)
 
 #st.set_page_config(layout="wide")
-
-#Sidebar
-st.sidebar.header('Review')
-st.sidebar.file_uploader('', type=['pdf', 'docx'])
-st.sidebar.header('Download')
-st.sidebar.download_button(label = "Download", data = "data", file_name = "file_name", mime = None, key = None)
-
-#Main Section
-st.title('NDA Comparisor')
 
 paragraph_01 = """
     1. Scope of Private Information. For the intent of this Contract, "Private Information" includes only
@@ -81,6 +93,28 @@ paragraph_09 = """
 paragraphs = [paragraph_01, paragraph_02, paragraph_03,
               paragraph_04, paragraph_05, paragraph_06,
               paragraph_07, paragraph_08, paragraph_09]
+highlights = [WD_COLOR.YELLOW, None, None, WD_COLOR.RED, None, None, WD_COLOR.RED, None, None]
+
+#Sidebar
+st.sidebar.header('Review')
+st.sidebar.file_uploader('', type=['pdf', 'docx'])
+st.sidebar.header('Download')
+#st.sidebar.download_button(label = "Download", data = save_docx(paragraphs, highlights), file_name = "test.docx", mime = None, key = None)
+
+save_docx(paragraphs, highlights)
+
+with open('temp.docx', 'rb') as f:
+    tmp_file = f.read()
+    st.sidebar.download_button(
+        label="Download Word Document",
+        data=tmp_file,
+        file_name="highlighted_text.docx",
+        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+        
+
+
+#Main Section
+st.title('NDA Comparisor')
 
 match_01 = """
     Definition of Confidential Information. For the scope of this Agreement, "Confidential Information"
