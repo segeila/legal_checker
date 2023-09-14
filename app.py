@@ -9,10 +9,10 @@ st.title('NDA Comparisor')
 
 sample_nda_text = """ This Non-Disclosure Agreement (the “Agreement”) is entered into by and between [Company Name],
 a [State] corporation, having a principal place of business at [Address] (“Company”), and [Name],
-having a principal place of residence at [Address] (“Recipient”). With respect to the disclosure of certain proprietary and confidential information
+having a principal place of residence at [Address] (“Recipient”). <span style="background-color: red"> With respect to the disclosure of certain proprietary and confidential information </span>
 that is described below, the parties agree to the following terms and conditions:
 - Definition of Confidential Information. “Confidential Information” means any information disclosed by or on behalf of Company to Recipient,
-whether before or after the date of this Agreement, that is not generally known to the public and that Recipient should know given the facts and circumstances."""
+whether before or after the date of this Agreement, <span style="background-color: yellow">that is not generally known to the public</span> and that Recipient should know given the facts and circumstances."""
 
 slide_number = st.slider('Scroll through paragraphs', 1, 3, 1)
 
